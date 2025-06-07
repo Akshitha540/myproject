@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact & To-Do Webpage</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #4CAF50;
+      padding: 1rem;
+      color: white;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-around;
+      background-color: #333;
+    }
+
+    nav a {
+      color: white;
+      padding: 1rem;
+      text-decoration: none;
+      display: block;
+    }
+
+    nav a:hover {
+      background-color: #575757;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    section {
+      background: #f9f9f9;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-top: 1rem;
+    }
+
+    input, textarea, button {
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #e0e0e0;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    li button {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 0.3rem 0.6rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Web Project</h1>
+  </header>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Contact</a>
+    <a href="#">To-Do</a>
+  </nav>
+
+  <main>
+    <section>
+      <h2>Contact Form</h2>
+      <form id="contactForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" rows="4" required></textarea>
+
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>To-Do List</h2>
+      <input type="text" id="todoInput" placeholder="Enter a task">
+      <button onclick="addTodo()">Add</button>
+      <ul id="todoList"></ul>
+    </section>
+  </main>
+
+  <script>
+    // Form validation
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+      if (!email.match(emailPattern)) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      alert("Form submitted successfully!");
+      this.reset();
+    });
+
+    // To-Do List functionality
+    function addTodo() {
+      const input = document.getElementById('todoInput');
+      const task = input.value.trim();
+      if (task === '') {
+        alert("Please enter a task.");
+        return;
+      }
+
+      const li = document.createElement('li');
+      li.textContent = task;
+
+      const delBtn = document.createElement('button');
+      delBtn.textContent = 'X';
+      delBtn.onclick = () => li.remove();
+
+      li.appendChild(delBtn);
+      document.getElementById('todoList').appendChild(li);
+      input.value = '';
+    }
+  </script>
+</body>
+</html>
